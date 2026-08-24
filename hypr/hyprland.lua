@@ -17,3 +17,6 @@ require("modules.appearance")
 require("modules.input")
 require("modules.keybindings")
 require("modules.window-rules")
+
+-- Noctalia wallpaper theme (rendered to ~/.config/hypr/noctalia.lua)
+require("noctalia").apply_theme()

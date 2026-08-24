@@ -1,0 +1,87 @@
+[tools]
+hunk = "latest"
+pi = "latest"
+
+# ---- CLI / editors ----
+jq = "latest"
+ripgrep = "latest"
+fd = "latest"
+fzf = "latest"
+zoxide = "latest"
+bat = "latest"
+gh = "latest"
+yazi = "latest"
+just = "latest"
+pandoc = "latest"
+fastfetch = "latest"
+btop = "latest"
+starship = "latest"
+helix = { backend = "aqua", version = "latest" } # helix-editor/helix
+
+# ---- runtimes / toolchains ----
+nodejs = "latest"
+zig = "latest"
+uv = "latest"
+typst = "latest"
+tree-sitter = "latest"
+
+# ---- LSPs ----
+zls = "latest"
+lua-language-server = "latest"
+tinymist = "latest"
+stylua = "latest"
+
+[settings]
+dotfiles.default_mode = "copy"
+
+[dotfiles]
+# ---- app configs (dotfiles repo, whole dir or file) ----
+"~/.config/nvim" = "../../dotfiles/nvim"
+"~/.config/niri" = "../../dotfiles/niri"
+"~/.config/hypr" = "../../dotfiles/hypr"
+"~/.config/helix" = "../../dotfiles/helix"
+"~/.config/mpv" = "../../dotfiles/mpv"
+"~/.config/yt-dlp" = "../../dotfiles/yt-dlp"
+"~/.config/vicinae" = "../../dotfiles/vicinae"
+"~/.config/go-musicfox" = "../../dotfiles/go-musicfox"
+
+"~/.config/starship.toml" = "../../dotfiles/starship.toml"
+"~/.config/ghostty/config" = "../../dotfiles/ghostty/config"
+"~/.config/nushell/config.nu" = "../../dotfiles/nushell/config.nu"
+"~/.config/nushell/env.nu" = "../../dotfiles/nushell/env.nu"
+
+"~/.config/sway/config" = "../../dotfiles/sway/config"
+"~/.config/sway/config.d" = "../../dotfiles/sway/config.d"
+"~/.config/sway/color_01.icc" = "../../dotfiles/sway/color_01.icc"
+"~/.config/sway/colors" = "../../dotfiles/sway/colors" # stylix snapshot
+
+# emacs: file-level only (runtime dirs elpa/eln-cache/... stay real)
+"~/.config/emacs/init.el" = "../../dotfiles/emacs/init.el"
+"~/.config/emacs/early-init.el" = "../../dotfiles/emacs/early-init.el"
+"~/.config/emacs/extras" = "../../dotfiles/emacs/extras"
+"~/.config/emacs/assets" = "../../dotfiles/emacs/assets"
+"~/.config/emacs/user-lisp" = "../../dotfiles/emacs/user-lisp"
+
+# ---- home root files (native dotfiles) ----
+"~/.profile" = "../../dotfiles/home/.profile"
+"~/.bashrc" = "../../dotfiles/home/.bashrc"
+"~/.bash_profile" = "../../dotfiles/home/.bash_profile"
+"~/.npmrc" = "../../dotfiles/home/.npmrc"
+"~/.Xresources" = "../../dotfiles/home/.Xresources"
+"~/.config/environment.d/10-mise.conf" = "../../dotfiles/home/environment.d/10-mise.conf"
+"~/.config/mimeapps.list" = "../../dotfiles/home/mimeapps.list"
+"~/.config/fontconfig/fonts.conf" = "../../dotfiles/home/fontconfig/fonts.conf"
+"~/.config/fontconfig/conf.d/50-reject-colrv1.conf" = "../../dotfiles/home/fontconfig/conf.d/50-reject-colrv1.conf"
+"~/.config/fish/config.fish" = "../../dotfiles/home/fish/config.fish"
+
+[tasks]
+apply-dotfiles = "mise bootstrap dotfiles apply"
+status-dotfiles = "mise bootstrap dotfiles status"
+
+# ---- mise self-management ----
+# config.toml lives in the dotfiles repo; the entry below makes mise manage
+# its own config file. mode=symlink on purpose: mise rewrites this file often
+# (mise set/use/...), so a symlink keeps the repo in sync automatically.
+[dotfiles."~/.config/mise/config.toml"]
+source = "~/dotfiles/mise/config.toml"
+mode = "symlink"

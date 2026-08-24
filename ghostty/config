@@ -4,8 +4,9 @@
 command = bash
 shell-integration-features = no-cursor, ssh-terminfo
 
-# Built-in theme (matches the desktop kanagawa-dragon base16 scheme)
-theme = "Kanagawa Dragon"
+# Theme: noctalia (wallpaper-derived, rendered to ~/.config/ghostty/themes/noctalia
+# by noctalia's builtin templates; fall back to a builtin if you want a static look)
+theme = noctalia
 
 # Font (monospace + CJK fallback), sized up for readability
 font-family = PragmataPro, LXGW WenKai Mono
