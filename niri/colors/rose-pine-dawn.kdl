@@ -1,0 +1,35 @@
+// Rosé Pine Dawn Theme for Niri
+
+layout {
+    focus-ring {
+        // 活动聚焦环：使用主题的鸢尾紫色
+        active-color   "#907aa9"
+        // 非活动聚焦环：与背景融合（米白色）
+        inactive-color "#faf4ed"
+        // 紧急状态：使用主题的暖玫瑰色，醒目而不刺眼
+        urgent-color   "#d7827e"
+    }
+
+    border {
+        active-color   "#907aa9"
+        inactive-color "#faf4ed"
+        urgent-color   "#d7827e"
+    }
+
+    shadow {
+        // 浅色背景下使用很淡的半透明黑，避免过于突兀
+        color "#00000030"
+    }
+
+    tab-indicator {
+        active-color   "#907aa9"
+        // 非活动标签指示器：使用柔和灰紫色
+        inactive-color "#cecacd"
+        urgent-color   "#d7827e"
+    }
+
+    insert-hint {
+        // 活动颜色加 50% 透明度（十六进制 80 ≈ 50%）
+        color "#907aa980"
+    }
+}

@@ -1,0 +1,35 @@
+// Tokyo Night Moon Theme for Niri
+
+layout {
+    focus-ring {
+        // Active: Tokyo Night Blue
+        active-color   "#82aaff"
+        // Inactive: Moon Background (让非活动边框与背景融合)
+        inactive-color "#222436"
+        // Urgent: Red
+        urgent-color   "#ff757f"
+    }
+
+    border {
+        active-color   "#82aaff"
+        inactive-color "#222436"
+        urgent-color   "#ff757f"
+    }
+
+    shadow {
+        // 使用黑色带透明度，或者用 Tokyo Night 的最深色 #1b1d2b70
+        color "#00000070"
+    }
+
+    tab-indicator {
+        active-color   "#82aaff"
+        // Inactive Tab: 使用由深到浅的过渡色 (Overlay/Muted Blue)
+        inactive-color "#444b6a"
+        urgent-color   "#ff757f"
+    }
+
+    insert-hint {
+        // Active color with 50% opacity (approx 80 in hex)
+        color "#82aaff80"
+    }
+}

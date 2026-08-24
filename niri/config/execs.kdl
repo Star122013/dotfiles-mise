@@ -1,0 +1,14 @@
+spawn-at-startup "xwayland-satellite"
+spawn-at-startup "noctalia"
+spawn-at-startup "fcitx5"
+// spawn-at-startup "qs" "-c" "noctalia-shell"
+spawn-at-startup "vicinae" "server"
+
+// spawn-sh-at-startup "mpvpaper DP-2 ~/Documents/dotfiles/dotfiles/Pictures/wallpaper/809a95a9.mp4"
+// clipboard support
+spawn-at-startup "sh" "-c" "wl-paste --type image --watch cliphist store"
+spawn-at-startup "sh" "-c" "wl-paste --type text --watch cliphist store"
+// spawn-at-startup "sh" "-c" "/usr/libexec/polkit-gnome-authentication-agent-1"
+// spawn-at-startup "sh" "-c" "wl-clip-persist --clipboard regular"
+spawn-sh-at-startup "awww-daemon && awww img ~/Pictures/Wallpapaers/portal-cake.png"
+spawn-sh-at-startup "foot --server"

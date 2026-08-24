@@ -1,0 +1,183 @@
+// Workspaces
+workspace "browser"
+workspace "code"
+workspace "chat"
+
+// -----------------------------------------------------------------------------
+// Global Aesthetics (Apply to ALL windows)
+// -----------------------------------------------------------------------------
+// 全局：所有窗口默认最大化，无圆角
+window-rule {
+    geometry-corner-radius 10
+    clip-to-geometry true
+    default-column-width { proportion 1.0; }
+    // background-effect {
+    //     blur true
+    //     xray false
+    // }
+}
+
+blur {
+    // off
+    passes 2
+    offset 3
+    noise 0.03
+    saturation 1.0
+}
+
+// -----------------------------------------------------------------------------
+// Layer Rules
+// -----------------------------------------------------------------------------
+// Set the overview wallpaper on the backdrop.
+layer-rule {
+  match namespace="^noctalia-overview*"
+  place-within-backdrop true
+}
+
+layer-rule {
+  match namespace="^noctalia-(background|launcher-overlay|dock)-.*$"
+  background-effect {
+    xray false
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// Floating Rules
+// -----------------------------------------------------------------------------
+
+// General Floating
+window-rule {
+    // System & UI Dialogs
+    match title="^(file_progress)$"
+    match title="^(confirm)$"
+    match title="^(dialog)$"
+    match title="^(download)$"
+    match title="^(notification )$"
+    match title="^(error)$"
+    match title="^(splash)$"
+    match title="^(nwg-look)$"
+    match title="^(confirmreset)$"
+    match title="^(Delete profile)$"
+    match title="^File Operation Progress$"
+    match title="^Confirm to replace files$"
+    match title="^KDE Connect URL handler$"
+
+    // File Pickers & Common Dialogs
+    match title="^(Open File)(.*)$"
+    match title="^(Select a File)(.*)$"
+    match title="^(Choose wallpaper)(.*)$"
+    match title="^(Open Folder)(.*)$"
+    match title="^(Save As)(.*)$"
+    match title="^(Library)(.*)$"
+    match title="^(File Upload)(.*)$"
+
+    // Integrations
+    match title="^(hyprland-share-picker)$"
+    match title="^(.*)-Google$"
+    match title="^(.*)System Update$"
+    match title="(.*) - Google (.*) - (.*)"
+
+    // App Specific Floating
+    match title="^satty$"
+    match app-id="^xdm-app$"
+    match app-id="^com.gabm.satty$"
+    match app-id="^org.qbittorrent.qBittorrent$"
+    match app-id="^org.pulseaudio.pavucontrol$"
+    match app-id="^net.davidotek.pupgui2$"
+    match app-id="^com.github.th_ch.youtube_music$"
+
+    match app-id="firefox$" title="^Picture-in-Picture$"
+
+    open-floating true
+}
+
+// Floating with specific geometry
+window-rule {
+    match app-id="^QQ$"
+    match title="^图片查看器$"
+    match title="^群聊的聊天记录$"
+
+    open-floating true
+    default-column-width { proportion 0.75; }
+    default-window-height { fixed 1000; }
+    open-maximized false
+}
+
+window-rule {
+    match app-id="^com.ayugram.desktop$" title="^Media viewer$"
+
+    open-floating true
+    default-column-width { proportion 0.5; }
+    default-window-height { fixed 500; }
+    open-maximized false
+}
+
+window-rule {
+    match app-id="steam" title="^notificationtoasts_\\d+_desktop$"
+    match app-id="com.viber.Viber" title="^notificationtoasts_\\d+_desktop$"
+    default-floating-position x=10 y=10 relative-to="bottom-right"
+}
+
+// -----------------------------------------------------------------------------
+// Window States (Fullscreen)
+// -----------------------------------------------------------------------------
+// 最大化已由全局规则统一处理，此处仅保留需要全屏的应用
+
+window-rule {
+    match app-id="mpv$"
+    open-fullscreen true
+}
+
+// -----------------------------------------------------------------------------
+// Workspace Assignments & App Specifics
+// -----------------------------------------------------------------------------
+
+// Workspace: Browser
+window-rule {
+    match app-id="firefox-bin$"
+    match app-id="org.mozilla.firefox$"
+    match app-id="google-chrome$"
+    open-on-workspace "browser"
+    default-column-width { proportion 1.0; }
+}
+
+// Workspace: Code
+window-rule {
+    match app-id="kitty$"
+    match app-id="foot$"
+    match app-id="com.mitchellh.ghostty$"
+    match app-id="neovide$"
+    match app-id="emacs$"
+
+    draw-border-with-background false
+    open-floating false
+    default-column-width { proportion 1.0; }
+    open-on-workspace "code"
+    opacity 1.0
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+window-rule {
+    match app-id="Postman$"
+    match app-id="^obsidian$"
+    open-on-workspace "code"
+}
+
+// Workspace: Chat
+window-rule {
+    match app-id="^vesktop$"
+    match app-id="^org.telegram.desktop$"
+    match app-id="^com.ayugram.desktop$"
+
+    default-column-width { proportion 0.5; }
+    open-on-workspace "chat"
+}
+
+window-rule {
+  match app-id="^steam_app_0$"
+  open-fullscreen true
+}

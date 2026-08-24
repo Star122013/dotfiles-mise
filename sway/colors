@@ -1,0 +1,8 @@
+# Sway colorscheme — static snapshot of the former Stylix kanagawa-dragon output
+# class                 border      background  text        indicator   child_border
+client.focused          #8ba4b0 #8ba4b0 #181616 #8ba4b0 #8ba4b0
+client.focused_inactive #737c73 #282727 #c5c9c5 #737c73 #282727
+client.unfocused        #282727 #282727 #c5c9c5 #282727 #282727
+client.urgent           #c4746e #c4746e #181616 #c4746e #c4746e
+client.placeholder      #181616 #181616 #c5c9c5 #181616 #181616
+client.background       #181616

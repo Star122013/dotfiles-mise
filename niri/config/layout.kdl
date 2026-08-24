@@ -1,0 +1,50 @@
+/*
+██╗      █████╗ ██╗   ██╗ ██████╗ ██╗   ██╗████████╗
+██║     ██╔══██╗╚██╗ ██╔╝██╔═══██╗██║   ██║╚══██╔══╝
+██║     ███████║ ╚████╔╝ ██║   ██║██║   ██║   ██║
+██║     ██╔══██║  ╚██╔╝  ██║   ██║██║   ██║   ██║
+███████╗██║  ██║   ██║   ╚██████╔╝╚██████╔╝   ██║
+╚══════╝╚═╝  ╚═╝   ╚═╝    ╚═════╝  ╚═════╝    ╚═╝
+*/
+layout {
+    // 只有一个窗口时自动居中显示
+    always-center-single-column
+    gaps 5
+    center-focused-column "never"
+    default-column-display "tabbed"
+    preset-column-widths {
+        proportion 0.25
+        proportion 0.5
+        proportion 0.75
+        proportion 1.0
+    }
+    preset-window-heights {
+        proportion 0.2
+        proportion 0.4
+        proportion 0.5
+        proportion 0.6
+        proportion 0.8
+        proportion 1.0
+    }
+    default-column-width {
+        proportion 1.0
+    }
+    struts {
+      left 5
+      right 5
+      top 5
+      bottom 5
+    }
+    border {
+        width 0
+    }
+
+    tab-indicator {
+        off
+        width 5
+        gap 7
+        length total-proportion=0.5
+        position "top"
+        place-within-column
+    }
+}

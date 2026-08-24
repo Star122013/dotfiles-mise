@@ -1,0 +1,8 @@
+# Override the built-in kanagawa-dragon theme to remove the gutter background.
+inherits = "kanagawa-dragon"
+
+# kanagawa-dragon sets a solid bg on both the gutter and the line numbers.
+"ui.gutter" = { fg = "dragonBlack6", bg = "none" }
+"ui.gutter.selected" = { bg = "none" }
+"ui.linenr" = { fg = "dragonBlack6", bg = "none" }
+"ui.linenr.selected" = { fg = "roninYellow", modifiers = ["bold"] }

@@ -1,0 +1,5 @@
+[tools]
+"aqua:Kampfkarren/selene" = "latest"
+"cargo:emmylua_ls" = "latest"
+lua = "latest"
+stylua = "latest"

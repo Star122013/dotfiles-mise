@@ -1,0 +1,34 @@
+/*
+██╗███╗   ██╗██████╗ ██╗   ██╗████████╗
+██║████╗  ██║██╔══██╗██║   ██║╚══██╔══╝
+██║██╔██╗ ██║██████╔╝██║   ██║   ██║
+██║██║╚██╗██║██╔═══╝ ██║   ██║   ██║
+██║██║ ╚████║██║     ╚██████╔╝   ██║
+╚═╝╚═╝  ╚═══╝╚═╝      ╚═════╝    ╚═╝
+*/
+input {
+    keyboard {
+        xkb {// URGENT : Put xkb options and layout here
+            layout "us"
+        }
+    }
+    touchpad {
+        off
+        tap
+        dwt
+        natural-scroll
+        accel-speed 1.0
+        accel-profile "flat"
+    }
+    mouse {
+        accel-speed 1
+        accel-profile "flat"
+    }
+    workspace-auto-back-and-forth
+    focus-follows-mouse max-scroll-amount="0%"
+}
+gestures {
+    hot-corners {
+        off
+    }
+}

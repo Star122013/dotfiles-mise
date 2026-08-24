@@ -1,0 +1,20 @@
+# Lines starting with # are comments
+# 429
+--cookies-from-browser firefox
+# Always extract audio
+# -x
+
+# Copy the mtime
+--mtime
+
+# sub
+--write-subs
+--write-auto-subs
+--sub-langs "zh.*,en"
+# Download and merge the best video-only format and the best audio-only format,
+-f "bv*+ba/b"
+# Use this proxy
+# --proxy 127.0.0.1:3128
+
+# Save all videos under YouTube directory in your home directory
+-o ~/Videos/YouTube/%(channel)s/%(title)s/%(title)s.%(ext)s

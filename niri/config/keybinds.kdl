@@ -1,0 +1,54 @@
+/*
+██╗  ██╗███████╗██╗   ██╗██████╗ ██╗███╗   ██╗██████╗ ███████╗
+██║ ██╔╝██╔════╝╚██╗ ██╔╝██╔══██╗██║████╗  ██║██╔══██╗██╔════╝
+█████╔╝ █████╗   ╚████╔╝ ██████╔╝██║██╔██╗ ██║██║  ██║███████╗
+██╔═██╗ ██╔══╝    ╚██╔╝  ██╔══██╗██║██║╚██╗██║██║  ██║╚════██║
+██║  ██╗███████╗   ██║   ██████╔╝██║██║ ╚████║██████╔╝███████║
+╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═════╝ ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝
+*/
+binds {
+    Mod+Shift+Slash     { show-hotkey-overlay; }
+    Mod+Q               { close-window; }
+    Mod+Return          { spawn "ghostty"; }
+    Mod+E               { spawn "nautilus"; }
+    // Mod+Space           { spawn "vicinae"; }
+    Mod+F               { fullscreen-window; }
+    Mod+M               { maximize-column; }
+    Mod+T               { toggle-window-floating; }
+    Mod+Left            { focus-column-left; }
+    Mod+Right           { focus-column-right; }
+    Mod+Up              { focus-workspace-up; }
+    Mod+Down            { focus-workspace-down; }
+    Mod+Shift+Left      { move-column-left; }
+    Mod+Shift+Right     { move-column-right; }
+    Mod+Shift+Up        { move-column-to-workspace-up; }
+    Mod+Shift+Down      { move-column-to-workspace-down; }
+    Mod+R               { switch-preset-column-width; }
+    Mod+1               { focus-workspace "browser"; }
+    Mod+2               { focus-workspace "code"; }
+    Mod+3               { focus-workspace "chat"; }
+    Mod+Tab             { toggle-overview; }
+    Print               { spawn "sh" "-c" "grim -g \"$(slurp)\" - | satty --filename -"; }
+    Alt+Print           { spawn "sh" "-c" "grim - | satty --filename -"; }
+    Ctrl+Print          { screenshot-window write-to-disk=true; }
+
+    // noctalia
+    Mod+Space           { spawn-sh "vicinae toggle"; }
+    Mod+V               { spawn-sh "qs -c noctalia-shell ipc call plugin:clipper toggle"; }
+    Mod+L               { spawn-sh "qs -c noctalia-shell ipc call lockScreen lock"; }
+
+    // Tab management
+    Mod+W               { toggle-column-tabbed-display; }
+    Mod+Shift+W         { spawn "ghostty"; }
+    Mod+Shift+Return    { consume-window-into-column; }
+    Mod+Alt+Return      { expel-window-from-column; }
+
+    // Window navigation (vim-style)
+    Mod+J               { focus-window-down; }
+    Mod+K               { focus-window-up; }
+    Mod+Shift+J         { move-window-down; }
+    Mod+Shift+K         { move-window-up; }
+
+    // Quick terminal (scratchpad)
+    Mod+Grave           { spawn "ghostty" "+toggle-quick-terminal"; }
+}
