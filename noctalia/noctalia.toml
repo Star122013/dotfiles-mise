@@ -1,0 +1,22 @@
+# Noctalia template config — renders wallpaper-derived theme files into
+# $XDG_CACHE_HOME/noctalia/theme/ (OUTSIDE the git repo, so the repo stays clean).
+#
+# Usage:
+#   noctalia theme <wallpaper> -c noctalia/noctalia.toml
+#   # or:  noctalia/noctalia/render.sh [wallpaper]
+#
+# Apps pick the rendered files up via symlinks in this repo:
+#   niri/noctalia.kdl            -> ~/.cache/noctalia/theme/niri.kdl
+#   helix/themes/noctalia.toml   -> ~/.cache/noctalia/theme/helix.toml
+# Add more templates below; the store path for the original files is gone
+# once nix is removed, so every template you want lives in ./templates/.
+
+[config]
+
+[templates.niri]
+input_path = "./templates/niri/niri.kdl"
+output_path = "$XDG_CACHE_HOME/noctalia/theme/niri.kdl"
+
+[templates.helix]
+input_path = "./templates/helix/helix.toml"
+output_path = "$XDG_CACHE_HOME/noctalia/theme/helix.toml"
