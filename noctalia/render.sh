@@ -7,7 +7,10 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 wallpaper="${1:-}"
 if [ -z "$wallpaper" ]; then
-  wallpaper="$(grep -m1 -oP '(?<=^path = ")[^"]+' "$HOME/.local/state/noctalia/settings.toml" 2>/dev/null || true)"
+  wallpaper="$(noctalia msg wallpaper-get 2>/dev/null | tail -1 || true)"
+fi
+if [ -z "$wallpaper" ]; then
+  wallpaper="$(grep -m1 -oP '(?<=path = ")[^"]+' "$HOME/.local/state/noctalia/settings.toml" 2>/dev/null || true)"
 fi
 if [ -z "$wallpaper" ]; then
   echo "usage: $0 [wallpaper-image]" >&2
