@@ -11,7 +11,7 @@ binds {
     Mod+Q               { close-window; }
     Mod+Return          { spawn "ghostty"; }
     Mod+E               { spawn "nautilus"; }
-    // Mod+Space           { spawn "vicinae"; }
+    // Mod+Space           { spawn "noctalia msg panel-toggle launcher"; }
     Mod+F               { fullscreen-window; }
     Mod+M               { maximize-column; }
     Mod+T               { toggle-window-floating; }
@@ -33,7 +33,7 @@ binds {
     Ctrl+Print          { screenshot-window write-to-disk=true; }
 
     // noctalia
-    Mod+Space           { spawn-sh "vicinae toggle"; }
+    Mod+Space           { spawn-sh "noctalia msg panel-toggle launcher"; }
     Mod+V               { spawn-sh "qs -c noctalia-shell ipc call plugin:clipper toggle"; }
     Mod+L               { spawn-sh "qs -c noctalia-shell ipc call lockScreen lock"; }
 

@@ -15,7 +15,6 @@
 
 hl.on("hyprland.start", function()
 	hl.exec_cmd("noctalia")
-	hl.exec_cmd("vicinae server")
 	hl.exec_cmd("fcitx5")
 	hl.exec_cmd("wl-paste --type image --watch cliphist store")
 	hl.exec_cmd("wl-paste --type text --watch cliphist store")

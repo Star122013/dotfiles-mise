@@ -5,7 +5,7 @@
 -- Set programs that you use
 local terminal = "ghostty +new-window"
 local fileManager = "nautilus"
-local menu = "vicinae toggle"
+local menu = "noctalia msg panel-toggle launcher"
 
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
