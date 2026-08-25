@@ -1,0 +1,8 @@
+# Noctalia user template — nvim mini.base16 palette.
+# Renders a plain base16 palette table into ~/.config/nvim/lua/matugen.lua
+# (outside the git repo; mise manages ~/.config/nvim with mode="copy").
+# nvim/lua/plugins/themes.lua dofiles it and feeds mini.base16.
+[theme.templates.user.nvim]
+input_path = "$XDG_CONFIG_HOME/noctalia/templates/nvim-palette.lua"
+output_path = "$XDG_CONFIG_HOME/nvim/lua/matugen.lua"
+post_hook = "pkill -SIGUSR1 nvim || true"

@@ -74,6 +74,10 @@ dotfiles.default_mode = "copy"
 "~/.config/fontconfig/conf.d/50-reject-colrv1.conf" = "../../dotfiles/home/fontconfig/conf.d/50-reject-colrv1.conf"
 "~/.config/fish/config.fish" = "../../dotfiles/home/fish/config.fish"
 
+# ---- noctalia user templates (dotfile-managed, copy mode) ----
+"~/.config/noctalia/templates.toml" = "../../dotfiles/noctalia/templates.toml"
+"~/.config/noctalia/templates/nvim-palette.lua" = "../../dotfiles/noctalia/templates/nvim-palette.lua"
+
 [tasks]
 apply-dotfiles = "mise bootstrap dotfiles apply"
 status-dotfiles = "mise bootstrap dotfiles status"
@@ -85,3 +89,7 @@ status-dotfiles = "mise bootstrap dotfiles status"
 [dotfiles."~/.config/mise/config.toml"]
 source = "~/dotfiles/mise/config.toml"
 mode = "symlink"
+
+# ---- noctalia user templates (dotfile-managed, copy mode) ----
+"~/.config/noctalia/templates.toml" = "../../dotfiles/noctalia/templates.toml"
+"~/.config/noctalia/templates/nvim-palette.lua" = "../../dotfiles/noctalia/templates/nvim-palette.lua"

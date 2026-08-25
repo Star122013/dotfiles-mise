@@ -1,14 +1,39 @@
 --=============================================================================
 -- Theme
 --=============================================================================
--- Load static base16 colors (snapshot of former Stylix kanagawa-dragon palette,
--- lives in this repo at nvim/base16-colors.lua)
-local c = dofile(vim.fn.stdpath("config") .. "/base16-colors.lua")
+-- Palette source, in order of preference:
+--   1. noctalia wallpaper theme — rendered to ~/.config/nvim/lua/matugen.lua
+--      (outside the git repo; plain base16 palette table, recolors on wallpaper
+--      change).
+--   2. static snapshot in this repo (nvim/base16-colors.lua)
+local config_dir = vim.fn.stdpath("config")
+local function load_palette()
+	local matugen_path = config_dir .. "/lua/matugen.lua"
+	if vim.fn.filereadable(matugen_path) == 1 then
+		local ok, palette = pcall(dofile, matugen_path)
+		if ok and type(palette) == "table" then
+			return palette
+		end
+	end
+	return dofile(config_dir .. "/base16-colors.lua")
+end
+
+local c = load_palette()
 
 --=============================================================================
 -- mini.base16 — base16 color scheme using Stylix palette
 --=============================================================================
 require("mini.base16").setup({ palette = c })
+
+-- Re-apply the palette when noctalia's neovim template sends SIGUSR1
+-- (wallpaper changed).
+vim.api.nvim_create_autocmd("Signal", {
+	pattern = "SIGUSR1",
+	callback = function()
+		local fresh = load_palette()
+		require("mini.base16").setup({ palette = fresh })
+	end,
+})
 
 -- Transparent backgrounds
 local set_hl = function(name, opts)
