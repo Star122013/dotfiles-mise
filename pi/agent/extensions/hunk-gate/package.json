@@ -1,0 +1,10 @@
+{
+  "name": "pi-hunk-gate",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "pi": {
+    "extensions": ["./index.ts"]
+  },
+  "dependencies": {}
+}
