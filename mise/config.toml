@@ -98,7 +98,3 @@ status-dotfiles = "mise bootstrap dotfiles status"
 [dotfiles."~/.config/mise/config.toml"]
 source = "~/dotfiles/mise/config.toml"
 mode = "symlink"
-
-# ---- noctalia user templates (dotfile-managed, copy mode) ----
-"~/.config/noctalia/templates.toml" = "../../dotfiles/noctalia/templates.toml"
-"~/.config/noctalia/templates/nvim-palette.lua" = "../../dotfiles/noctalia/templates/nvim-palette.lua"
