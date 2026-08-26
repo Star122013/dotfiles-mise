@@ -30,6 +30,7 @@ zls = "latest"
 lua-language-server = "latest"
 tinymist = "latest"
 stylua = "latest"
+oh-my-pi = { version = "latest", rename_exe = "omp" }
 
 [settings]
 dotfiles.default_mode = "copy"
@@ -44,6 +45,14 @@ dotfiles.default_mode = "copy"
 "~/.config/yt-dlp" = "../../dotfiles/yt-dlp"
 "~/.config/vicinae" = "../../dotfiles/vicinae"
 "~/.config/go-musicfox" = "../../dotfiles/go-musicfox"
+
+# pi agent: global extensions (~/.pi/agent/extensions), one dir per extension
+"~/.pi/agent/extensions/compact-ui" = "../../dotfiles/pi/agent/extensions/compact-ui"
+"~/.pi/agent/extensions/hunk-gate" = "../../dotfiles/pi/agent/extensions/hunk-gate"
+"~/.pi/agent/extensions/toolbox" = "../../dotfiles/pi/agent/extensions/toolbox"
+
+# pi agent: global instructions
+"~/.pi/agent/AGENTS.md" = "../../dotfiles/pi/agent/AGENTS.md"
 
 "~/.config/starship.toml" = "../../dotfiles/starship.toml"
 "~/.config/ghostty/config" = "../../dotfiles/ghostty/config"
