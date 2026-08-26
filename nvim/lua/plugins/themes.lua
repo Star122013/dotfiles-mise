@@ -2,13 +2,15 @@
 -- Theme
 --=============================================================================
 -- Palette source, in order of preference:
---   1. noctalia wallpaper theme — rendered to ~/.config/nvim/lua/matugen.lua
---      (outside the git repo; plain base16 palette table, recolors on wallpaper
---      change).
+--   1. noctalia wallpaper theme — rendered to
+--      ~/.local/state/noctalia/nvim-palette.lua
+--      ($XDG_STATE_HOME, outside mise-managed paths; plain base16 palette
+--      table, recolors on wallpaper change).
 --   2. static snapshot in this repo (nvim/base16-colors.lua)
 local config_dir = vim.fn.stdpath("config")
+local state_home = vim.env.XDG_STATE_HOME or (vim.fn.expand("~") .. "/.local/state")
 local function load_palette()
-	local matugen_path = config_dir .. "/lua/matugen.lua"
+	local matugen_path = state_home .. "/noctalia/nvim-palette.lua"
 	if vim.fn.filereadable(matugen_path) == 1 then
 		local ok, palette = pcall(dofile, matugen_path)
 		if ok and type(palette) == "table" then
