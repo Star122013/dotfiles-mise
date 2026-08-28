@@ -4,12 +4,31 @@
 command = bash
 shell-integration-features = no-cursor, ssh-terminfo
 
-# Theme: noctalia (wallpaper-derived, rendered to ~/.config/ghostty/themes/noctalia
-# by noctalia's builtin templates; fall back to a builtin if you want a static look)
-theme = noctalia
+# Theme: Kanagawa Dragon (static)
+background = 181616
+foreground = c5c9c5
+cursor-color = c8c093
+selection-background = 2d4f67
+selection-foreground = c8c093
+palette = 0=#0d0c0c
+palette = 1=#c4746e
+palette = 2=#8a9a7b
+palette = 3=#c4b28a
+palette = 4=#8ba4b0
+palette = 5=#a292a3
+palette = 6=#8ea4a2
+palette = 7=#c8c093
+palette = 8=#a6a69c
+palette = 9=#e46876
+palette = 10=#87a987
+palette = 11=#e6c384
+palette = 12=#7fb4ca
+palette = 13=#938aa9
+palette = 14=#7aa89f
+palette = 15=#c5c9c5
 
 # Font (monospace + CJK fallback), sized up for readability
-font-family = Iosevka Curly, Sarasa Mono SC
+font-family = Iosevka Curly, Sarasa Term SC
 font-size = 16
 
 # Appearance

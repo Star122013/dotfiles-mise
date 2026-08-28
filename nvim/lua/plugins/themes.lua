@@ -1,22 +1,10 @@
 --=============================================================================
 -- Theme
 --=============================================================================
--- Palette source, in order of preference:
---   1. noctalia wallpaper theme — rendered to
---      ~/.local/state/noctalia/nvim-palette.lua
---      ($XDG_STATE_HOME, outside mise-managed paths; plain base16 palette
---      table, recolors on wallpaper change).
---   2. static snapshot in this repo (nvim/base16-colors.lua)
+-- Static Kanagawa Dragon palette (nvim/base16-colors.lua), no dynamic
+-- recoloring from noctalia.
 local config_dir = vim.fn.stdpath("config")
-local state_home = vim.env.XDG_STATE_HOME or (vim.fn.expand("~") .. "/.local/state")
 local function load_palette()
-	local matugen_path = state_home .. "/noctalia/nvim-palette.lua"
-	if vim.fn.filereadable(matugen_path) == 1 then
-		local ok, palette = pcall(dofile, matugen_path)
-		if ok and type(palette) == "table" then
-			return palette
-		end
-	end
 	return dofile(config_dir .. "/base16-colors.lua")
 end
 
@@ -26,16 +14,6 @@ local c = load_palette()
 -- mini.base16 — base16 color scheme using Stylix palette
 --=============================================================================
 require("mini.base16").setup({ palette = c })
-
--- Re-apply the palette when noctalia's neovim template sends SIGUSR1
--- (wallpaper changed).
-vim.api.nvim_create_autocmd("Signal", {
-	pattern = "SIGUSR1",
-	callback = function()
-		local fresh = load_palette()
-		require("mini.base16").setup({ palette = fresh })
-	end,
-})
 
 -- Transparent backgrounds
 local set_hl = function(name, opts)

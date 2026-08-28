@@ -1,8 +1,8 @@
 [Added Associations]
 
 [Default Applications]
-text/html=com.google.Chrome.desktop
-x-scheme-handler/http=com.google.Chrome.desktop
-x-scheme-handler/https=com.google.Chrome.desktop
+text/html=firefox-bin.desktop
+x-scheme-handler/http=firefox-bin.desktop
+x-scheme-handler/https=firefox-bin.desktop
 
 [Removed Associations]

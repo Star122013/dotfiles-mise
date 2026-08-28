@@ -1,9 +1,0 @@
-# Noctalia user template — nvim mini.base16 palette.
-# Renders a plain base16 palette table into ~/.local/state/noctalia/nvim-palette.lua
-# ($XDG_STATE_HOME, outside mise-managed paths so `mise dotfiles apply` cannot
-# clobber the generated file; mise copies ~/.config/nvim from the repo).
-# nvim/lua/plugins/themes.lua dofiles it and feeds mini.base16.
-[theme.templates.user.nvim]
-input_path = "$XDG_CONFIG_HOME/noctalia/templates/nvim-palette.lua"
-output_path = "$XDG_STATE_HOME/noctalia/nvim-palette.lua"
-post_hook = "pkill -SIGUSR1 nvim || true"

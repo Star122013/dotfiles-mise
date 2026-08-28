@@ -3,7 +3,7 @@
 ---------------------
 
 -- Set programs that you use
-local terminal = "ghostty +new-window"
+local terminal = "kitty"
 local fileManager = "nautilus"
 local menu = "noctalia msg panel-toggle launcher"
 
@@ -12,8 +12,9 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
 local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
--- closeWindowBind:set_enabled(false)
-hl.bind(mainMod .. " + GRAVE", hl.dsp.exec_cmd("ghostty +toggle-quick-terminal"))
+closeWindowBind:set_enabled(true)
+-- quake-style drop-down terminal on the `~` key (kitten quick-access-terminal)
+hl.bind(mainMod .. "+ GRAVE", hl.dsp.exec_cmd("kitten quick-access-terminal --detach"))
 hl.bind(
 	mainMod .. " + M",
 	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")

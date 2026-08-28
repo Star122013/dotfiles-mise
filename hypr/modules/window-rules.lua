@@ -66,14 +66,6 @@ hl.window_rule({
 	opacity = "0.9 0.8",
 })
 
-hl.window_rule({
-	name = "transparent terminal",
-	match = {
-		class = ".*",
-	},
-	opacity = "0.9 0.8",
-})
-
 -- Bind apps to specific workspaces
 -- Browsers → workspace 1 (web)
 hl.window_rule({

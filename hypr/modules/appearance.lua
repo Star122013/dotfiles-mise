@@ -11,8 +11,9 @@ hl.config({
 		border_size = 2,
 
 		col = {
-			active_border = { colors = { "rgba(33ccffee)", "rgba(00ff99ee)" }, angle = 45 },
-			inactive_border = "rgba(595959aa)",
+			-- Kanagawa Dragon border colors (green #8a9a7b, cyan #8ea4a2)
+			active_border = { colors = { "rgba(8a9a7bee)", "rgba(8ea4a2ee)" }, angle = 45 },
+			inactive_border = "rgba(393836aa)",
 		},
 
 		-- Set to true to enable resizing windows by clicking and dragging on borders and gaps
@@ -25,12 +26,12 @@ hl.config({
 	},
 
 	decoration = {
-		rounding = 5,
-		rounding_power = 2,
+		rounding = 0,
+		rounding_power = 0,
 
 		-- Change transparency of focused and unfocused windows
-		active_opacity = 1.0,
-		inactive_opacity = 1.0,
+		active_opacity = 0.9,
+		inactive_opacity = 0.9,
 
 		shadow = {
 			enabled = true,
