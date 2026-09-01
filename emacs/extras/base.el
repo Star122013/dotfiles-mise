@@ -1,6 +1,5 @@
-;;; extras-base.el --- Base enhancements -*- lexical-binding: t; -*-
-
-;;; Commentary:
+;;; Emacs Bedrock  -*- lexical-binding: t; -*-
+;;;
 ;;; Extra config: Base enhancements
 
 ;;; Usage: Append or require this file from init.el to enable various UI/UX
@@ -22,10 +21,6 @@
 ;;;  - Power-ups: Embark and Consult
 ;;;  - Minibuffer and completion
 ;;;  - Misc. editing enhancements
-
-;;; Code:
-
-(declare-function consult--customize-put "consult")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -65,8 +60,9 @@
          ("M-s l" . consult-line)            ; needed by consult-line to detect isearch
          ("M-s L" . consult-line-multi)      ; needed by consult-line to detect isearch
          )
-  :custom
-  (consult-narrow-key "<"))
+  :config
+  ;; Narrowing lets you restrict results to certain groups of candidates
+  (setq consult-narrow-key "<"))
 
 (use-package embark-consult
   :ensure t)
@@ -77,7 +73,7 @@
   :ensure t
   :demand t
   :after (avy embark-consult)
-  :bind (("C-c a" . embark-act))        ; bind this to an easy key to hit
+  :bind (("C-c @" . embark-act))        ; bind this to an easy key to hit
   :init
   ;; Add the option to run embark when using avy
   (defun bedrock/avy-action-embark (pt)
@@ -99,18 +95,12 @@
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Use the default block cursor.
-(setq-default cursor-type 'box)
-
 ;; Vertico: better vertical completion for minibuffer commands
 (use-package vertico
   :ensure t
   :init
   ;; You'll want to make sure that e.g. fido-mode isn't enabled
-  (vertico-mode)
-  :custom-face
-  ;; Selected row, similar to Telescope/nvim picker cursor highlight.
-  (vertico-current ((t (:background "#2e4a6e" :foreground "#ffffff" :extend t)))))
+  (vertico-mode))
 
 (use-package vertico-directory
   :ensure nil
@@ -121,82 +111,57 @@
 ;; Marginalia: annotations for minibuffer
 (use-package marginalia
   :ensure t
-  :commands marginalia-mode
-  :init (marginalia-mode))
-
-
-;; Popup completion-at-point
-(use-package
-  corfu
-  :ensure t
-  :init (global-corfu-mode)
-  :custom (corfu-auto-delay 0.2) (corfu-cycle t)
-  ;; (corfu-separator ?_) ;; Set to orderless separator, if not using space
-  (corfu-auto-prefix 0)
-  (corfu-preselect 'prompt)
-  (corfu-auto-trigger ".") ;; Custom trigger characters
-  (corfu-quit-no-match 'separator) ;; or t
   :config
-  ;; Adapt corfu faces to the current theme
-  (defun my/corfu-setup-faces ()
-    "Set corfu faces to match the current theme."
-    (face-spec-set 'corfu-default
-      (list (list t (list :inherit 'default
-                          :background (face-attribute 'default :background)
-                          :foreground (face-attribute 'default :foreground)))))
-    (face-spec-set 'corfu-current
-      (list (list t (list :inherit 'highlight :extend t)))))
-  (my/corfu-setup-faces)
-  (add-hook 'after-load-theme-hook #'my/corfu-setup-faces)
+  (marginalia-mode))
+
+;; Corfu: Popup completion-at-point
+(use-package corfu
+  :ensure t
+  :init
+  (global-corfu-mode)
   :bind
-  (:map
-   corfu-map
-   ("TAB" . corfu-next)
-   ([tab] . corfu-next)
-   ("S-TAB" . corfu-previous)
-   ("SPC" . corfu-insert-separator)
-   ([backtab] . corfu-previous)))
-;;  ;; ("TAB" . corfu-next)           ; Tab to select next
-;;  ;; ("<backtab>" . corfu-previous) ; Shift-Tab to select previous
-;; ("C-n" . corfu-next) ("C-p" . corfu-previous)))
+  (:map corfu-map
+        ("SPC" . corfu-insert-separator)
+        ("C-n" . corfu-next)
+        ("C-p" . corfu-previous)))
 
 ;; Part of corfu
-(use-package
-  corfu-popupinfo
+(use-package corfu-popupinfo
   :after corfu
+  :ensure nil
   :hook (corfu-mode . corfu-popupinfo-mode)
   :custom
-  (corfu-popupinfo-delay '(0.1 . 0.1))
+  (corfu-popupinfo-delay '(0.25 . 0.1))
   (corfu-popupinfo-hide nil)
-  :config (corfu-popupinfo-mode))
+  :config
+  (corfu-popupinfo-mode))
+
+;; Make corfu popup come up in terminal overlay
+(use-package corfu-terminal
+  :if (not (display-graphic-p))
+  :ensure t
+  :config
+  (corfu-terminal-mode))
+
+;; Fancy completion-at-point functions; there's too much in the cape package to
+;; configure here; dive in when you're comfortable!
+(use-package cape
+  :ensure t
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file))
 
 ;; Pretty icons for corfu
-;; (use-package svg-lib :ensure t)
 ;; (use-package kind-icon
 ;;   :if (display-graphic-p)
 ;;   :ensure t
 ;;   :after corfu
-;;   :custom
-;;   (kind-icon-blend-background t)
-;;   (kind-icon-default-face 'corfu-default)
 ;;   :config
 ;;   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
-;; Fancy completion-at-point functions; there's too much in the cape package to
-;; configure here; dive in when you're comfortable!
-(use-package
-  cape
+(use-package nerd-icons-corfu
   :ensure t
-  :defer t
-  :init
-  (add-to-list
-   'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file))
-
-;; Pretty icons for corfu
-(use-package
-  nerd-icons-corfu
-  :ensure t
+  :after corfu
   :config
   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
@@ -209,24 +174,60 @@
   :hook ((eshell-mode . bedrock/setup-eshell)))
 
 ;; Eat: Emulate A Terminal
-(use-package eat
-  :ensure t
-  :custom
-  (eat-term-name "xterm")
-  :commands (eat-eshell-mode eat-eshell-visual-command-mode)
-  :init
-  (eat-eshell-mode)
-  (eat-eshell-visual-command-mode))
+;; (use-package eat
+;;   :ensure t
+;;   :custom
+;;   (eat-term-name "xterm")
+;;   :config
+;;   (eat-eshell-mode)                     ; use Eat to handle term codes in program output
+;;   (eat-eshell-visual-command-mode))     ; commands like less will be handled by Eat
+(use-package ghostel
+  :ensure t)
+(use-package ghostel-compile
+  :hook (after-init . ghostel-compile-global-mode))
+(use-package ghostel-comint
+  :hook (after-init . ghostel-comint-global-mode))
+
 
 ;; Orderless: powerful completion style
 (use-package orderless
   :ensure t
-  :init
+  :config
   (setq completion-styles '(orderless)))
 
-(provide 'extras-base)
-;; Local Variables:
-;; flycheck-disabled-checkers: (emacs-lisp-checkdoc)
-;; no-byte-compile: t
-;; End:
-;;; extras-base.el ends here
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;;   Misc. editing enhancements
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Doom modeline
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  :custom
+  (doom-modeline-support-imenu t)
+  (doom-modeline-buffer-file-name-style 'file-name)
+  (doom-modeline-icon t))
+
+(use-package indent-bars                                                                                                                                                                                                         
+  :ensure t      
+  :hook ((prog-mode . indent-bars-mode))
+  ;; 如果用 tree-sitter 模式，想更准可加这个 hook：                                                                                                                                                                                
+  ;; :hook ((go-ts-mode c-ts-mode . indent-bars-ts-mode))
+  :config
+  (setq
+   indent-bars-color '(highlight :face-bg t :blend 0.15)
+   indent-bars-pattern "."
+   indent-bars-width-frac 0.1
+   indent-bars-pad-frac 0.1
+   indent-bars-zigzag nil
+   indent-bars-color-by-depth '(:regexp "outline-\\([0-9]+\\)" :blend 1) ; blend=1: blend with BG only
+   indent-bars-highlight-current-depth '(:blend 0.5) ; pump up the BG blend on current
+   indent-bars-display-on-blank-lines t))
+
+;; Rainbow parentheses (built-in hl-paren-mode is absent in this Emacs build,
+;; so use the rainbow-delimiters package instead)
+(use-package rainbow-delimiters
+  :ensure t
+  :hook (prog-mode . rainbow-delimiters-mode))

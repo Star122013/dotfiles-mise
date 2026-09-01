@@ -1,4 +1,4 @@
-;;; Emacs Bedrock
+;;; Emacs Bedrock  -*- lexical-binding: t; -*-
 ;;;
 ;;; Extra config: Writer
 
@@ -20,6 +20,8 @@
 
 ;;; Contents:
 ;;;
+;;;  - General prose-friendly behavior
+;;;  - Markdown (built-in tree-sitter mode)
 ;;;  - Spell checking
 ;;;  - Dictionary
 ;;;  - Distraction mitigation
@@ -35,17 +37,49 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
+;;;   Markdown (built-in tree-sitter mode)
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Emacs 31 ships a built-in tree-sitter Markdown mode, `markdown-ts-mode'.
+;; It is experimental, so we register it for .md/.markdown/.mdown files via
+;; `:mode' and let use-package defer-load it on first match.
+;;
+;; Install the right tree-sitter grammars yourself once:
+;;   M-x treesit-install-language-grammar RET markdown RET
+;;   M-x treesit-install-language-grammar RET markdown-inline RET
+(use-package markdown-ts-mode
+  :ensure nil                              ; built-in, don't fetch it
+  :mode (("\\.md\\'" . markdown-ts-mode)
+         ("\\.markdown\\'" . markdown-ts-mode)
+         ("\\.mdown\\'" . markdown-ts-mode))
+  :hook ((markdown-ts-mode . visual-line-mode)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;;   Typst
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package typst-ts-mode
+  :vc (:url "https://codeberg.org/meow_king/typst-ts-mode.git")
+  :mode (("\\.typ\\'" . typst-ts-mode))
+  :hook ((typst-ts-mode . visual-line-mode)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
 ;;;   Spell checking
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Jinx: Enchanted spell-checking
+;; Only enable in writing modes: Markdown, Typst, and Org.
 (use-package jinx
   :ensure t
-  :hook (((text-mode prog-mode) . jinx-mode))
+  :hook ((markdown-ts-mode typst-ts-mode org-mode) . jinx-mode)
   :bind (("C-;" . jinx-correct))
   :custom
-  (jinx-camel-modes '(prog-mode))
+  (jinx-camel-modes '(markdown-ts-mode typst-ts-mode org-mode))
   (jinx-delay 0.01))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -64,8 +98,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Olivetti: Set the window margins so your text is centered
+;; Only auto-enable in writing modes: Markdown, Typst, and Org.
 (use-package olivetti
   :ensure t
-  ;; Uncomment below to make olivetti-mode turn on automatically in certain modes
-  ; :hook ((markdown-mode . olivetti-mode))
-  )
+  :hook ((markdown-ts-mode typst-ts-mode org-mode) . olivetti-mode))

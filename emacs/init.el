@@ -1,6 +1,4 @@
-;;; init.el ---  -*- lexical-binding: t; -*-
-;;; Commentary:
-;;;  ________                                                _______                 __                            __
+;;;  ________                                                _______                 __                            __  -*- lexical-binding: t;-*-
 ;;; /        |                                              /       \               /  |                          /  |
 ;;; $$$$$$$$/ _____  ____   ______   _______  _______       $$$$$$$  | ______   ____$$ | ______   ______   _______$$ |   __
 ;;; $$ |__   /     \/    \ /      \ /       |/       |      $$ |__$$ |/      \ /    $$ |/      \ /      \ /       $$ |  /  |
@@ -24,9 +22,17 @@
 ;;;  - Built-in customization framework
 
 ;;; Guardrail
-;;; Code:
-(when (< emacs-major-version 31)
-  (error "This config requires Emacs 31 and newer; you have version %s" emacs-major-version))
+
+(when (< emacs-major-version 29)
+  (error "Emacs Bedrock only works with Emacs 29 and newer; you have version %s" emacs-major-version))
+
+;; Make Emacs see globally-installed mise tools (rg, typst, zls, ...) even
+;; outside projects that have their own .mise.toml.  (mise-mode only activates
+;; per-project tools; this gives Emacs the same global PATH as your shell.)
+(let ((mise-shims (expand-file-name "~/.local/share/mise/shims")))
+  (when (file-directory-p mise-shims)
+    (add-to-list 'exec-path mise-shims)
+    (setenv "PATH" (concat mise-shims ":" (getenv "PATH")))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -79,7 +85,7 @@
 ;; Don't litter file system with *~ backup files; put them all inside
 ;; ~/.emacs.d/backup or wherever
 (defun bedrock--backup-file-name (fpath)
-  "Return a new file path of a given file path(FPATH).
+  "Return a new file path of a given file path.
 If the new path's directories does not exist, create them."
   (let* ((backupRootDir (concat user-emacs-directory "emacs-backup/"))
          (filePath (replace-regexp-in-string "[A-Za-z]:" "" fpath )) ; remove Windows driver letter in path
@@ -133,17 +139,14 @@ If the new path's directories does not exist, create them."
 (setopt completions-group t)
 (setopt completion-auto-select 'second-tab)            ; Much more eager
 ;(setopt completion-auto-select t)                     ; See `C-h v completion-auto-select' for more possible values
-(setopt completion-eager-display t)
-(setopt completion-eager-update t)
-
 
 (keymap-set minibuffer-mode-map "TAB" 'minibuffer-complete) ; TAB acts more like how it does in the shell
-(setopt minibuffer-visible-completions 'up-down)
+
 ;; For a fancier built-in completion option, try ido-mode,
-;; icomplete-vertical, or fido-mode. See also the file user-lisp/extras/base.el
+;; icomplete-vertical, or fido-mode. See also the file extras/base.el
 
 ;(icomplete-vertical-mode)
-;; (fido-vertical-mode)
+;(fido-vertical-mode)
 ;(setopt icomplete-delay-completions-threshold 4000)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -159,8 +162,8 @@ If the new path's directories does not exist, create them."
 (setopt x-underline-at-descent-line nil)           ; Prettier underlines
 (setopt switch-to-buffer-obey-display-actions t)   ; Make switching buffers more consistent
 
-(setopt show-trailing-whitespace nil)      ; By default, don't underline trailing spaces(
-(setopt indicate-buffer-boundaries nil)  ; Show buffer top and bottom in the margin
+(setopt show-trailing-whitespace nil)      ; By default, don't underline trailing spaces
+;; (setopt indicate-buffer-boundaries 'left)  ; Show buffer top and bottom in the margin
 
 ;; Enable horizontal scrolling
 (setopt mouse-wheel-tilt-scroll t)
@@ -172,11 +175,15 @@ If the new path's directories does not exist, create them."
 ;; (setopt tab-width 4)
 
 ;; Misc. UI tweaks
-(blink-cursor-mode -1)                                  ; Steady cursor
-(pixel-scroll-precision-mode 1)                         ; Smooth scrolling
+(blink-cursor-mode -1)                                ; Steady cursor
+(pixel-scroll-precision-mode)                         ; Smooth scrolling
 
 ;; Use common keystrokes by default
 (cua-mode)
+
+;; For terminal users, make the mouse more useful
+
+(xterm-mouse-mode 1)
 
 ;; Display line numbers in programming mode
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
@@ -189,6 +196,7 @@ If the new path's directories does not exist, create them."
 (let ((hl-line-hooks '(text-mode-hook prog-mode-hook)))
   (mapc (lambda (hook) (add-hook hook 'hl-line-mode)) hl-line-hooks))
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;;   Tab-bar configuration
@@ -196,7 +204,7 @@ If the new path's directories does not exist, create them."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Show the tab-bar as soon as tab-bar functions are invoked
-(setopt tab-bar-show 0)
+(setopt tab-bar-show 1)
 
 ;; Add the time to the tab-bar, if visible
 (add-to-list 'tab-bar-format 'tab-bar-format-align-right 'append)
@@ -211,79 +219,63 @@ If the new path's directories does not exist, create them."
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-package ansi-color
-  :hook (compilation-filter . ansi-color-compilation-filter))
-
 ;; (use-package emacs
 ;;   :config
 ;;   (load-theme 'modus-vivendi))          ; for light theme, use modus-operandi
-;; (use-package tokyonight-themes
-;;   :vc (:url "https://github.com/xuchengpeng/tokyonight-themes")
-;;   :config
-;;   (load-theme 'tokyonight-moon :no-confirm))
-;; (use-package doom-themes
-;;   :ensure t
-;;   :custom
-;;   ;; Global settings (defaults)
-;;   (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
-;;   (doom-themes-enable-italic t) ; if nil, italics are universally disabled
-;;   ;; for treemacs users
-;;   (doom-themes-treemacs-theme "doom-nord-light") ; use "doom-colors" for less minimal icon theme
-;;   :config
-;;   (load-theme 'doom-ayu-mirage t)
 
-;;   ;; Enable flashing mode-line on errors
-;;   (doom-themes-visual-bell-config)
-;;   ;; Enable custom neotree theme (nerd-icons must be installed!)
-;;   (doom-themes-neotree-config)
-;;   ;; or for treemacs users
-;;   (doom-themes-treemacs-config)
-;;   ;; Corrects (and improves) org-mode's native fontification.
-;;   (doom-themes-org-config))
-(use-package batppuccin
+(use-package doom-themes
   :ensure t
+  :custom
+  ;; Global settings (defaults)
+  (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
+  (doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  ;; for treemacs users
+  (doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
   :config
-  (load-theme 'batppuccin-frappe t))
-;; (use-package base16-theme
-;;   :ensure t
-;;   :config
-;;   (load-theme 'base16-rose-pine-dawn t))
+  (load-theme 'doom-solarized-light t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable custom neotree theme (nerd-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;;   Optional extras
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Uncomment the (require …) lines as desired.
-;; All files live in user-lisp/ and are auto-loaded via load-path.
+;; Uncomment the (load-file …) lines or copy code from the extras/ elisp files
+;; as desired
 
-;; UI/UX enhancements (minibuffer, autocompletion)
-(require 'extras-base)
+;; UI/UX enhancements mostly focused on minibuffer and autocompletion interfaces
+;; These ones are *strongly* recommended!
+(load-file (expand-file-name "extras/base.el" user-emacs-directory))
 
-;; Development tools (eglot, magit, per-language config)
-(require 'extras-dev)
+;; Packages for software development
+(load-file (expand-file-name "extras/dev.el" user-emacs-directory))
 
-;; Workspace management (tab-bar-mode + tabspaces)
-(require 'extras-workspace)
+(load-file (expand-file-name "extras/writer.el" user-emacs-directory))
 
-;; UI enhancements (modeline, tabs, dashboard)
-(require 'extras-ui)
+;; Text writing config / reading — see extras/reading.el (PDF docs)
+(load-file (expand-file-name "extras/reading.el" user-emacs-directory))
 
 ;; Vim-bindings in Emacs (evil-mode configuration)
-;(require 'extras-vim-like)
+;(load-file (expand-file-name "extras/vim-like.el" user-emacs-directory))
 
 ;; Org-mode configuration
-;; WARNING: customize variables inside user-lisp/extras-org.el before use!
-(require 'extras-org)
+(load-file (expand-file-name "extras/org.el" user-emacs-directory))
 
-;; Dired beautification and enhancement (dirvish)
-(require 'extras-dirvish)
+;; Email configuration in Emacs
+;; WARNING: needs the `mu' program installed; see the elisp file for more
+;; details.
+;(load-file (expand-file-name "extras/email.el" user-emacs-directory))
 
-;; Email configuration (needs `mu` program installed)
-;(require 'extras-email)
-
-;; Academic research tools
-;(require 'extras-researcher)
+;; Tools for academic researchers
+;(load-file (expand-file-name "extras/researcher.el" user-emacs-directory))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -296,14 +288,7 @@ If the new path's directories does not exist, create them."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil)
- '(package-vc-selected-packages
-   '((tramp-rpc :url "https://github.com/ArthurHeymans/emacs-tramp-rpc"
-		:lisp-dir "lisp")))
- '(safe-local-variable-values
-   '((eval progn (pp-buffer) (indent-buffer))
-     (flycheck-emacs-lisp-package-initialize . t)
-     (flycheck-emacs-lisp-init-load-path . t))))
+ '(package-selected-packages '(nerd-icons-corfu which-key)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
