@@ -8,7 +8,7 @@ hl.config({
 		gaps_in = 2,
 		gaps_out = 2,
 
-		border_size = 2,
+		border_size = 1,
 
 		col = {
 			-- Kanagawa Dragon border colors (green #8a9a7b, cyan #8ea4a2)
@@ -17,7 +17,7 @@ hl.config({
 		},
 
 		-- Set to true to enable resizing windows by clicking and dragging on borders and gaps
-		resize_on_border = false,
+		resize_on_border = true,
 
 		-- Please see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Tearing/ before you turn this on
 		allow_tearing = false,
@@ -30,8 +30,8 @@ hl.config({
 		rounding_power = 0,
 
 		-- Change transparency of focused and unfocused windows
-		active_opacity = 0.9,
-		inactive_opacity = 0.9,
+		active_opacity = 1.0,
+		inactive_opacity = 1.0,
 
 		shadow = {
 			enabled = true,

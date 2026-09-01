@@ -8,6 +8,3 @@ include "config/layout.kdl"
 include "config/keybinds.kdl"
 include "config/switcher.kdl"
 include "colors/catppuccin-mocha.kdl"
-// Noctalia wallpaper theme (rendered to ~/.cache/noctalia/theme/niri.kdl,
-// symlinked here as niri/noctalia.kdl so the repo stays clean)
-include "noctalia.kdl"

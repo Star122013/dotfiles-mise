@@ -1,49 +1,16 @@
 --=============================================================================
 -- Theme
 --=============================================================================
--- Static Kanagawa Dragon palette (nvim/base16-colors.lua), no dynamic
--- recoloring from noctalia.
-local config_dir = vim.fn.stdpath("config")
-local function load_palette()
-	return dofile(config_dir .. "/base16-colors.lua")
-end
-
-local c = load_palette()
-
---=============================================================================
--- mini.base16 — base16 color scheme using Stylix palette
---=============================================================================
-require("mini.base16").setup({ palette = c })
-
--- Transparent backgrounds
-local set_hl = function(name, opts)
-	vim.api.nvim_set_hl(0, name, opts)
-end
-
-set_hl("Normal", { bg = "NONE" })
-set_hl("NonText", { bg = "NONE" })
-set_hl("LineNr", { bg = "NONE" })
-set_hl("LineNrAbove", { bg = "NONE" })
-set_hl("LineNrBelow", { bg = "NONE" })
-set_hl("SignColumn", { bg = "NONE" })
-set_hl("NormalFloat", { bg = "NONE" })
-set_hl("FloatBorder", { bg = "NONE" })
-
--- Re-apply transparency if colorscheme is reloaded
-vim.api.nvim_create_autocmd("ColorScheme", {
-	group = vim.api.nvim_create_augroup("stylix_transparent", { clear = true }),
-	pattern = "*",
-	callback = function()
-		set_hl("Normal", { bg = "NONE" })
-		set_hl("NonText", { bg = "NONE" })
-		set_hl("LineNr", { bg = "NONE" })
-		set_hl("LineNrAbove", { bg = "NONE" })
-		set_hl("LineNrBelow", { bg = "NONE" })
-		set_hl("SignColumn", { bg = "NONE" })
-		set_hl("NormalFloat", { bg = "NONE" })
-		set_hl("FloatBorder", { bg = "NONE" })
-	end,
+-- Catppuccin (mocha flavour), transparent background
+require("catppuccin").setup({
+	flavour = "mocha", -- latte, frappe, macchiato, mocha
+	transparent_background = true,
+	float = {
+		transparent = true, -- enable transparent floating windows
+		solid = false, -- use solid styling for floating windows, see |winborder|
+	},
 })
+vim.cmd.colorscheme("catppuccin")
 
 require("mini.tabline").setup()
 require("mini.notify").setup()

@@ -9,7 +9,7 @@
 binds {
     Mod+Shift+Slash     { show-hotkey-overlay; }
     Mod+Q               { close-window; }
-    Mod+Return          { spawn "ghostty"; }
+    Mod+Return          { spawn "kitty"; }
     Mod+E               { spawn "nautilus"; }
     // Mod+Space           { spawn "noctalia msg panel-toggle launcher"; }
     Mod+F               { fullscreen-window; }
@@ -37,12 +37,6 @@ binds {
     Mod+V               { spawn-sh "qs -c noctalia-shell ipc call plugin:clipper toggle"; }
     Mod+L               { spawn-sh "qs -c noctalia-shell ipc call lockScreen lock"; }
 
-    // Tab management
-    Mod+W               { toggle-column-tabbed-display; }
-    Mod+Shift+W         { spawn "ghostty"; }
-    Mod+Shift+Return    { consume-window-into-column; }
-    Mod+Alt+Return      { expel-window-from-column; }
-
     // Window navigation (vim-style)
     Mod+J               { focus-window-down; }
     Mod+K               { focus-window-up; }
@@ -50,5 +44,5 @@ binds {
     Mod+Shift+K         { move-window-up; }
 
     // Quick terminal (scratchpad)
-    Mod+Grave           { spawn "ghostty" "+toggle-quick-terminal"; }
+    Mod+Grave           { spawn-sh "kitten quick-access-terminal"; }
 }

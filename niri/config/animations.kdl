@@ -11,7 +11,7 @@ animations {
         spring damping-ratio=0.80 stiffness=523 epsilon=0.0001
     }
 window-open {
-    duration-ms 0
+    duration-ms 100
     curve "ease-out-expo"
     custom-shader r"
     float ease_curve(float x) {
@@ -47,7 +47,7 @@ window-open {
     }"
 }
 
-    
+
     window-close {
     duration-ms 0
     curve "ease-out-expo"
@@ -65,7 +65,7 @@ window-open {
 
         // choose corner: 0=top-left,1=top-right,2=bottom-left,3=bottom-right
 
-        int corner = 0; 
+        int corner = 0;
         vec2 start;
         if (corner == 0) start = vec2(0.0,0.0);
         else if (corner == 1) start = vec2(1.0,0.0);
@@ -97,7 +97,7 @@ window-open {
     }"
 }
 
-    
+
     horizontal-view-movement {
         spring damping-ratio=0.85 stiffness=423 epsilon=0.0001
     }
