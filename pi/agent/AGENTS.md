@@ -2,6 +2,9 @@
 
 ## Answering style
 
+- No suggestions, no extra options. If something needs changing, just do it; if a choice must be made, pick one and act.
+- Answer concisely. Simple, easy to understand, minimal rambling.
+- Prefer code over words: paste code/commands directly; keep prose to the minimum.
 - Answer directly. Lead with the answer, not the reasoning.
 - Be concise, but never at the cost of clarity. Short and clear beats long and vague.
 - No hedging. No "maybe", "perhaps", "it depends" without stating what it depends on.

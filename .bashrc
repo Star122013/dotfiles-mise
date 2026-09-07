@@ -48,3 +48,11 @@ fi
 if [[ $TERM != "dumb" ]] && command -v starship >/dev/null 2>&1; then
   eval "$(starship init bash --print-full-init)"
 fi
+
+# flyline — load the newest mise-managed lib; no hardcoded version so a
+# `mise install` upgrade picks up the latest file automatically
+_flyline_lib=$(ls -t "$HOME/.local/share/mise/installs/github-hal-frgrd-flyline"/*/libflyline.so.* 2>/dev/null | head -1)
+if [ -n "$_flyline_lib" ] && [ -f "$_flyline_lib" ]; then
+  enable flyline 2>/dev/null || enable -f "$_flyline_lib" flyline
+fi
+unset _flyline_lib

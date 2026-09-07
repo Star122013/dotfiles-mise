@@ -6,20 +6,21 @@ workspace "chat"
 // -----------------------------------------------------------------------------
 // Global Aesthetics (Apply to ALL windows)
 // -----------------------------------------------------------------------------
-// 全局：所有窗口默认最大化，无圆角
 window-rule {
     geometry-corner-radius 10
     clip-to-geometry true
-    default-column-width { proportion 1.0; }
+    open-floating false
     // background-effect {
     //     blur true
     //     xray false
     // }
+    default-window-height { fixed 1388; }
+    default-column-width { fixed 2540; }
 }
 
 blur {
     // off
-    passes 2
+    passes 3
     offset 3
     noise 0.03
     saturation 1.0
@@ -30,14 +31,14 @@ blur {
 // -----------------------------------------------------------------------------
 // Set the overview wallpaper on the backdrop.
 layer-rule {
-  match namespace="^noctalia-overview*"
+  match namespace="^noctalia-backdrop"
   place-within-backdrop true
 }
 
 layer-rule {
-  match namespace="^noctalia-(background|launcher-overlay|dock)-.*$"
+  match namespace="noctalia-bar-default$"
   background-effect {
-    xray false
+    blur true
   }
 }
 
@@ -86,6 +87,8 @@ window-rule {
     match app-id="^org.pulseaudio.pavucontrol$"
     match app-id="^net.davidotek.pupgui2$"
     match app-id="^com.github.th_ch.youtube_music$"
+    match app-id="dev.noctalia.Noctalia"
+    match app-id="io.github.Faugus.faugus-launcher"
 
     match app-id="firefox$" title="^Picture-in-Picture$"
 
@@ -125,7 +128,6 @@ window-rule {
 // -----------------------------------------------------------------------------
 // Window States (Fullscreen)
 // -----------------------------------------------------------------------------
-// 最大化已由全局规则统一处理，此处仅保留需要全屏的应用
 
 window-rule {
     match app-id="mpv$"

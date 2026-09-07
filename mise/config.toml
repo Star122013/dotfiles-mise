@@ -17,6 +17,8 @@ fastfetch = "latest"
 btop = "latest"
 starship = "latest"
 helix = { backend = "aqua", version = "latest" } # helix-editor/helix
+# flyline: bash 增强 shared library (libflyline.so)，非可执行二进制，用 bash enable -f 加载
+"github:HalFrgrd/flyline" = "latest"
 
 # ---- runtimes / toolchains ----
 nodejs = "latest"
@@ -34,6 +36,9 @@ stylua = "latest"
 "npm:dsh" = "latest"
 npm = "latest"
 tealdeer = "latest"
+tokei = "latest"
+eza = "latest"
+"github:agavra/tuicr" = "latest"
 
 [settings]
 dotfiles.default_mode = "copy"
@@ -113,3 +118,19 @@ dotfiles.default_mode = "copy"
 [tasks]
 apply-dotfiles = "mise bootstrap dotfiles apply"
 status-dotfiles = "mise bootstrap dotfiles status"
+
+[tasks.flyline-enable]
+description = "Verify mise-managed flyline lib is loadable by this bash, or tell the user to load it from an interactive shell"
+run = """\
+lib=$(ls -t "$HOME/.local/share/mise/installs/github-hal-frgrd-flyline"/*/libflyline.so.* 2>/dev/null | head -1)
+[ -z "$lib" ] && { echo "error: no libflyline.so found under $HOME/.local/share/mise/installs/github-hal-frgrd-flyline"; exit 1; }
+echo "lib: $lib"
+if enable -f "$lib" flyline 2>/dev/null; then
+  echo "OK: flyline loadable — already active in ~/.bashrc on next interactive shell"
+  exit 0
+fi
+echo "NOTE: flyline refuses to load in non-interactive shells."
+echo "It is wired into ~/.bashrc, so it activates automatically in interactive shells."
+exit 0
+"""
+
